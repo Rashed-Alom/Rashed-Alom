@@ -1,0 +1,7 @@
+/.idea
+/.vscode
+/my_python3
+
+/manage/dataset/test
+/manage/dataset/train
+/manage/output/*.npy
