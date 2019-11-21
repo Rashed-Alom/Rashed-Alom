@@ -16,3 +16,4 @@ set /p string=
 git commit -m "%string%"
 
 git push origin master
+pause
