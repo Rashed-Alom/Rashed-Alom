@@ -8,8 +8,14 @@ from keras.layers import (Dense, Activation,
                     Flatten, Conv2D, MaxPooling2D, Dropout)
 from keras.models import Sequential, load_model
 
+from keras.callbacks import ModelCheckpoint, EarlyStopping
+
+
 # project modules
 from .. import config
+
+model_checkpoint_dir = os.path.join(config.checkpoint_path(), "baseline.h5").
+saved_model_dir = os.path.join(config.output_path(), "baseline.h5").
 
 
 #defining CNN model
@@ -49,6 +55,24 @@ def get_model():
     return model
 
 
+def read_model():
+    model = load_model(saved_model_dir)
+    return model
+
+def save_model_checkpoint();
+    return ModelCheckpoint(model_checkpoint_dir, 
+                            monitor = 'val_loss', 
+                            verbose = 2, 
+                            save_best_only = True, 
+                            save_weights_only = False, 
+                            mode='auto', 
+                            period = 1)
+
+def set_early_stopping():
+    return EarlyStopping(monitor = 'val_loss', 
+                        patience = 15, 
+                        verbose = 2, 
+                        mode = 'auto')
 
 
 if __name__ == "__main__":

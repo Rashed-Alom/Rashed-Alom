@@ -28,3 +28,6 @@ def src_path():
 
 def submission_path():
     return os.path.join(root_path(), "submission")
+
+def output_path():
+    return os.path.join(root_path(), "output")
