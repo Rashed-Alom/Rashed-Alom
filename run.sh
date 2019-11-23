@@ -1,3 +1,3 @@
 @echo on
 
-python -m project.config
+python -m project.src.train

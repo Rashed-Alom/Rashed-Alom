@@ -14,8 +14,8 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 # project modules
 from .. import config
 
-model_checkpoint_dir = os.path.join(config.checkpoint_path(), "baseline.h5").
-saved_model_dir = os.path.join(config.output_path(), "baseline.h5").
+model_checkpoint_dir = os.path.join(config.checkpoint_path(), "baseline.h5")
+saved_model_dir = os.path.join(config.output_path(), "baseline.h5")
 
 
 #defining CNN model
@@ -59,7 +59,7 @@ def read_model():
     model = load_model(saved_model_dir)
     return model
 
-def save_model_checkpoint();
+def save_model_checkpoint():
     return ModelCheckpoint(model_checkpoint_dir, 
                             monitor = 'val_loss', 
                             verbose = 2, 

@@ -12,7 +12,9 @@ nb_classes = 10
 img_size = 32
 img_channel = 3
 img_shape = (img_size, img_size, img_channel)
-
+lr = 0.001
+batch_size = 200
+nb_epochs = 60
 
 def root_path():
     return os.path.dirname(__file__)
