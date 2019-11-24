@@ -25,9 +25,10 @@ def normalization(x):
 
 
 
+#loading train data
 def load_train_data():
     train_data_dir = os.path.join(config.dataset_path(), "train")
-    # print(os.listdir(train_data_dir))
+    
     train_images = sorted(os.listdir(train_data_dir),
             key = lambda x: int (x.split(".")[0]))
 
@@ -54,7 +55,34 @@ def load_train_data():
     return X_train, Y_labels
 
 
+#loading test data
+def load_test_data():
+    test_data_dir = os.path.join(config.dataset_path(), "test")
+
+    test_images = sorted(os.listdir(test_data_dir),
+            key = lambda x: int (x.split(".")[0]))
+
+    test_images = [os.path.join(test_data_dir, img_path) 
+                    for img_path in test_images]
+
+    #print(test_images)
+    start = 0
+    nb_images = 50000
+    for part in range(0, 6):
+        if not (part == 0): start += 50000
+        end += 50000
+
+        print(start, " ", end) 
+"""
+    print("loading test images ....")
+    # loading image from absolute directory using opencv
+    for i, img_dir in enumerate(test_images):
+        img = cv2.imread(img_dir)
+        img = normalization(img)
+        X_test[i] = img 
+
+    return X_train, Y_labels
+    """
+
 if __name__ == "__main__":
-    x, y = load_train_data()
-    print(x.shape)
-    print(y.shape)
+    load_test_data()
