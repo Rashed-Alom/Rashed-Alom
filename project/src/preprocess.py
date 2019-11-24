@@ -69,20 +69,31 @@ def load_test_data():
     start = 0
     nb_images = 50000
     for part in range(0, 6):
-        if not (part == 0): start += 50000
-        end += 50000
+        if not (part == 0): start += nb_images
+        end = start + nb_images
 
-        print(start, " ", end) 
-"""
-    print("loading test images ....")
-    # loading image from absolute directory using opencv
-    for i, img_dir in enumerate(test_images):
-        img = cv2.imread(img_dir)
-        img = normalization(img)
-        X_test[i] = img 
+        #print(start, " ", end) 
+        X_test = np.ndarray((nb_images,
+                    config.img_size, config.img_size,
+                    config.img_channel), dtype=np.float32)
+        print("loading test images from ", start, " to ", end)
 
-    return X_train, Y_labels
-    """
+        # loading image from absolute directory using opencv
+        for i, img_dir in enumerate(test_images[start:end]):
+            img = cv2.imread(img_dir)
+            img = normalization(img)
+            X_test[i] = img 
+
+        np.save(os.path.join(config.output_path(), 
+                    "X_test_" + str(part)), X_test)
+        del X_test
+
+
+#loading test image part from numpy array
+def get_test_data_by_part(part):
+    print("loading test image part ", part, " from numpy array")
+    return  np.load(os.path.join(config.output_path(), 
+                    "X_test_" + str(part) + ".npy"))
 
 if __name__ == "__main__":
     load_test_data()
