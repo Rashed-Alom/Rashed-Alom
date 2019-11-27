@@ -70,7 +70,7 @@ def save_model_checkpoint():
 
 def set_early_stopping():
     return EarlyStopping(monitor = 'val_loss', 
-                        patience = 15, 
+                        patience = 300, 
                         verbose = 2, 
                         mode = 'auto')
 
