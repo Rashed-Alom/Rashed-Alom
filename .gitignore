@@ -5,6 +5,6 @@
 /project/checkpoint
 /project/submission
 /.gitignore
-/cmd.exe
-/git_push.bat
-/run.sh
+/cmd
+/git_push
+/run
