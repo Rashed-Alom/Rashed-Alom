@@ -9,6 +9,8 @@ import numpy as np
 # project modules
 from .. import config
 from . import my_model, preprocess
+model = my_model.get_model()
+model.summary()
 
 #loading data
 #X_train, Y_train = preprocess.load_train_data()
@@ -17,7 +19,7 @@ print("train data shape: ", X_train.shape)
 print("train data label: ", Y_train.shape)
 
 #loading model
-model = my_model.get_model()
+
 
 #compile
 model.compile(keras.optimizers.Adam(config.lr),

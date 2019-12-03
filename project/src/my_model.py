@@ -5,7 +5,7 @@ File: Network architecture for classifing cifer-10 data images
 
 import keras, os
 from keras.layers import (Dense, Activation, 
-                    Flatten, Conv2D, MaxPooling2D, Dropout)
+                    Flatten, Conv2D, MaxPooling2D, Dropout, BatchNormalization)
 from keras.models import Sequential, load_model
 
 from keras.callbacks import ModelCheckpoint, EarlyStopping
@@ -19,38 +19,41 @@ saved_model_dir = os.path.join(config.output_path(), "baseline.h5")
 
 
 #defining CNN model
-def get_model():
+def get_model(): # 90% + CIFER-10 MODEL
+    base = [32,32,   64,64,   128,128]
+    weight_decay = 1e-4
     model = Sequential()
-    model.add(Conv2D(32, (3, 3), padding = "same",
-                input_shape = config.img_shape))
-    model.add(Activation("relu"))
+    model.add(Conv2D(base[0], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay), input_shape=config.img_shape))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(base[1], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
+    
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Dropout(0.2))
 
-    model.add(Conv2D(32, (3, 3), padding = "same",
-                input_shape = config.img_shape))
-    model.add(Activation("relu"))
+    model.add(Conv2D(base[2], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(base[3], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
+    
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Dropout(0.3))
 
-    model.add(MaxPooling2D(pool_size = (2,2)))
-    model.add(Dropout(rate = 0.20))
-
-    model.add(Conv2D(64, (3, 3), padding = "same",
-                input_shape = config.img_shape))
-    model.add(Activation("relu"))
-
-    model.add(Conv2D(64, (3, 3), padding = "same",
-                input_shape = config.img_shape))
-    model.add(Activation("relu"))
-
-    model.add(MaxPooling2D(pool_size = (2,2)))
-    model.add(Dropout(rate = 0.20))
+    model.add(Conv2D(base[4], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(base[5], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Dropout(0.4))
 
     model.add(Flatten())
-    model.add(Dense(384, 
-                kernel_regularizer= keras.regularizers.l2(0.01)))
-    model.add(Activation("relu"))
-
-    model.add(Dropout(rate = 0.30))
-    model.add(Dense(config.nb_classes))
-    model.add(Activation("softmax"))
+    model.add(Dense(config.nb_classes, activation='softmax'))
 
     return model
 
