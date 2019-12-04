@@ -42,7 +42,7 @@ result = [label[i] for i in result]
 submit_df = pd.DataFrame({"id": range(1, config.nb_test_samles + 1), 
                     "label": result})
 
-submit_df.to_csv(os.path.join(config.submission_path(), "baseline_final_sub.csv"),
+submit_df.to_csv(os.path.join(config.submission_path(), "baseline_sub.csv"),
                  header = True, index = False)
 
 print("Submission file saved successfully")
