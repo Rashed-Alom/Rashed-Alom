@@ -4,7 +4,7 @@ File: Network architecture for classifing cifer-10 data images
 """
 
 import keras, os
-from keras.layers import (Dense, Activation, 
+from keras.layers import (Dense, Activation, LeakyReLU, 
                     Flatten, Conv2D, MaxPooling2D, Dropout, BatchNormalization)
 from keras.models import Sequential, load_model
 
@@ -24,33 +24,33 @@ def get_model(): # 90% + CIFER-10 MODEL
     weight_decay = 1e-4
     model = Sequential()
     model.add(Conv2D(base[0], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay), input_shape=config.img_shape))
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha= 0.01))
     model.add(BatchNormalization())
     model.add(Conv2D(base[1], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
     
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha= 0.01))
     model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.05))
 
     model.add(Conv2D(base[2], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha= 0.01))
     model.add(BatchNormalization())
     model.add(Conv2D(base[3], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
     
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha= 0.01))
     model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.1))
 
     model.add(Conv2D(base[4], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha= 0.01))
     model.add(BatchNormalization())
     model.add(Conv2D(base[5], (3,3), padding='same', kernel_regularizer=keras.regularizers.l2(weight_decay)))
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha= 0.01))
     model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.15))
 
     model.add(Flatten())
     model.add(Dense(config.nb_classes, activation='softmax'))
@@ -73,7 +73,7 @@ def save_model_checkpoint():
 
 def set_early_stopping():
     return EarlyStopping(monitor = 'val_loss', 
-                        patience = 100, 
+                        patience = 1300, 
                         verbose = 2, 
                         mode = 'auto')
 
